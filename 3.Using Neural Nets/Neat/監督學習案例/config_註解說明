@@ -1,0 +1,84 @@
+#--- parameters for the XOR-2 experiment ---#
+
+[NEAT]
+fitness_criterion     = max     # 希望genome fitness越大越好=>max  # 希望genome fitness越小越好=>min
+fitness_threshold     = -0.01   # 當由計算得出的適應性fitness_criterion優於此閾值時，終止演化過程
+pop_size              = 1000    # 種群數量
+
+# 假如是True，所有species由於stagnation become extinct時，重新生成一個random種群
+# 假如是False，CompleteExtinctionException異常會被拋出
+reset_on_extinction   = False
+
+[DefaultGenome]
+# node activation options
+activation_default      = sigmoid
+activation_mutate_rate  = 0.0       # activation函數變異機率，可能變異為activation_options中的函數
+activation_options      = sigmoid   # activation_function的可能函數
+
+# node aggregation options
+aggregation_default     = sum   # 即w0*v0 + w1*v1 +...+ wn*vn=>求和
+aggregation_mutate_rate = 0.0   # aggregation的變異機率，可能變異為aggregation_options中的方式
+aggregation_options     = sum   # activation_function的可能方式
+
+# node bias options(預設為Gauss distribution)
+bias_init_mean          = 0.0      # Gauss distribution的平均
+bias_init_stdev         = 1.0      # Gauss distribution的標準差
+bias_max_value          = 30.0     # bias最大值
+bias_min_value          = -30.0    # bias最小值
+bias_mutate_power       = 0.5      # 以0為平均值的Gauss distribution的標準差所得到bias的變異值
+bias_mutate_rate        = 0.7      # bias加上一個random值的變異概率
+bias_replace_rate       = 0.1      # bias用一個random值替換的變異概率
+
+# genome compatibility options
+compatibility_disjoint_coefficient = 1.0
+compatibility_weight_coefficient   = 0.5
+
+# connection add/remove rates
+conn_add_prob           = 0.5    # 在現存node之間添加connection的變異概率
+conn_delete_prob        = 0.5    # 刪除現存connection之間的變異概率
+
+# connection enable options
+enabled_default         = True   # 新創建的connection的enable是True還是False
+enabled_mutate_rate     = 0.01   # enabled狀態變為disabled概率
+
+feed_forward            = True   # True表示recurrent連接不存在
+initial_connection      = full
+
+# node add/remove rates
+node_add_prob           = 0.2    # 添加新結點的變異概率
+node_delete_prob        = 0.2    # 刪除新結點的變異概率
+
+# network parameters
+num_hidden              = 0
+num_inputs              = 2
+num_outputs             = 1
+
+# node response options          # 跟bias options差不多
+response_init_mean      = 1.0
+response_init_stdev     = 0.0
+response_max_value      = 30.0
+response_min_value      = -30.0
+response_mutate_power   = 0.0
+response_mutate_rate    = 0.0
+response_replace_rate   = 0.0
+
+# connection weight options      # 跟bias options差不多
+weight_init_mean        = 0.0
+weight_init_stdev       = 1.0
+weight_max_value        = 30
+weight_min_value        = -30
+weight_mutate_power     = 0.5
+weight_mutate_rate      = 0.8
+weight_replace_rate     = 0.1
+
+[DefaultSpeciesSet]
+compatibility_threshold = 3.0    # genomic distance小於此距離被認為是同一物種
+
+[DefaultStagnation]
+species_fitness_func = max       # 計算物種適應度的函數，允許的值是：max，min，mean，median
+max_stagnation       = 20        # fitness一直停滯好幾個世代，並超過此次數，該種群被視為stagnant並且移除
+species_elitism      = 2         # 若將max_stagnation設置為2，也就是阻止具有最高物種適應性的2個物種因停滯而被移除
+
+[DefaultReproduction]
+elitism = 2                      # 每個種群中最好的個體的個數，會被保留到下一代
+survival_threshold = 0.2         # 每一世代中每個種群允許繁殖的概率
