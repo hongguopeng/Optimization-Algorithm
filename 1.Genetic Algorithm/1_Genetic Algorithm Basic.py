@@ -37,9 +37,9 @@ def get_fitness(fitness):
 
 
 # 將2進位轉為10進位
-# (pop)_2x10 = [1 1 1 1 1 1 1 1 1
-#               1 0 0 0 0 0 0 0 0]#
-# (binary)_10x1 = [512 256 128 64 32 16 8 4 2 1].T
+# (pop)_2x10    = [ 1   1   1   1   1   1   1   1  1  1
+#                   1   0   0   0   0   0   0   0  0  0]
+# (binary)_10x1 = [512 256 128 64  32  16   8   4  2  1].T
 # (pop * binary)_2x1 = [1023 512].T
 def translateDNA(pop):
     binary = 2 ** np.arange(DNA_SIZE)[::-1]
